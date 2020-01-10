@@ -7,7 +7,7 @@ exports.index = (req, res) => {
 	res.render("index", { user: req.user });
 };
 
-exports.sign_up_get = (req, res) => res.render("sign-up-form");
+exports.sign_up_get = (req, res) => res.render("sign_up_form");
 
 exports.sign_up_post = [
 	// Validate fields.
@@ -15,6 +15,7 @@ exports.sign_up_post = [
 	check('lastname', 'Last name must not be empty.').isLength({ min: 1 }).trim(),
 	check('username', 'Username must not be empty.').isLength({ min: 1 }).trim(),
 	check('password', 'Password must not be empty').isLength({ min: 1 }).trim(),
+	check('passwordConfirmation').exists(),
 	check('isMember', 'isMember must not be empty').isLength({ min: 1 }).trim(),
 
 	// Sanitize fields (using wildcard).
@@ -23,6 +24,10 @@ exports.sign_up_post = [
 	sanitizeBody('username').escape(),
 	sanitizeBody('password').escape(),
 	sanitizeBody('isMember').escape(),
+	sanitizeBody('passwordConfirmation').escape(),
+	check('passwordConfirmation', 'passwordConfirmation field must have the same value as the password field')
+	    .exists()
+	    .custom((value, { req }) => value === req.body.password),
 	(req, res, next) => {
 		// Extract the validation errors from a request.
 		const errors = validationResult(req);
