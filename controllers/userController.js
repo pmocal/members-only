@@ -7,7 +7,7 @@ exports.index = (req, res) => {
 	res.render("index", { user: req.user });
 };
 
-exports.sign_up_get = (req, res) => res.render("sign_up_form");
+exports.sign_up_get = (req, res) => res.render("sign_up_form", { title: "Sign up form" });
 
 exports.sign_up_post = [
 	// Validate fields.
@@ -30,17 +30,23 @@ exports.sign_up_post = [
 	    .custom((value, { req }) => value === req.body.password),
 	(req, res, next) => {
 		// Extract the validation errors from a request.
+		var user = new User({
+			username: req.body.username,
+			firstname: req.body.firstname,
+			lastname: req.body.lastname,
+			isMember: req.body.isMember
+		})
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
 			// There are errors. Render form again with sanitized values/error messages.
-			res.render('sign_up_form');
+			res.render('sign_up_form', { title: "Signup form", user: user, errors: errors.array() });
 			// , { title: 'Create Item', item: item, errors: errors.array() });
 		}
 		else {
 			// Data from form is valid. Save book.
 			bcrypt.genSalt(10, function(err, salt) {
 				bcrypt.hash(req.body.password, salt, function(err, hash) {
-					const user = new User({
+					user = new User({
 						username: req.body.username,
 						password: hash,
 						firstname: req.body.firstname,

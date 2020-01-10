@@ -2,23 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>{{title}}</title>
 </head>
 <body>
   <h1>Sign Up</h1>
   <form action="" method="POST">
-    <label for="firstname">First name</label>
-    <input name="firstname" placeholder="first name" type="text" />
-    <label for="lastname">Last name</label>
-    <input name="lastname" placeholder="last name" type="text" />
-    <label for="username">Username</label>
-    <input name="username" placeholder="username" type="text" />
-    <label for="password">Password</label>
-    <input name="password" type="password" />
-    <label for="passwordConfirmation">Password confirmation</label>
-    <input name="passwordConfirmation" type="password" />
-    <input name="isMember" type="hidden" value="false" />
+    {{#if user}}
+      <input name="firstname" placeholder="first name" type="text" value="{{user.firstname}}" />
+      <label for="lastname">Last name</label>
+      <input name="lastname" placeholder="last name" type="text" value="{{user.lastname}}" />
+      <label for="username">Username</label>
+      <input name="username" placeholder="username" type="text" value="{{user.username}}" />
+      <label for="password">Password</label>
+      <input name="password" type="password" />
+      <label for="passwordConfirmation">Password confirmation</label>
+      <input name="passwordConfirmation" type="password" />
+      <input name="isMember" type="hidden" value="false" />
+    {{else}}
+      <label for="firstname">First name</label>
+      <input name="firstname" placeholder="first name" type="text" />
+      <label for="lastname">Last name</label>
+      <input name="lastname" placeholder="last name" type="text" />
+      <label for="username">Username</label>
+      <input name="username" placeholder="username" type="text" />
+      <label for="password">Password</label>
+      <input name="password" type="password" />
+      <label for="passwordConfirmation">Password confirmation</label>
+      <input name="passwordConfirmation" type="password" />
+      <input name="isMember" type="hidden" value="false" />
+    {{/if}}
     <button>Sign Up</button>
   </form>
+  {{#if errors}}
+    <ul>
+      {{#each errors}}
+        <li>{{this.msg}}</li>
+      {{/each}}
+    </ul>
+  {{/if}}
 </body>
 </html>
