@@ -1,2 +1,22 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>{{title}}</title>
+	</head>
+	<body>
+		{{#if user}}
+			<h1>Welcome back {{user}}</h1>
+			<a href="/log-out">Log Out</a>
+		{{else}}
+			<h1>please log in</h1>
+			<form action="/log-in" method="POST">
+				<label for="username">Username</label>
+				<input name="username" placeholder="username" type="text" />
+				<label for="password">Password</label>
+				<input name="password" type="password" />
+				<button>Log In</button>
+			</form>
+		{{/if}}
+	</body>
+</html>

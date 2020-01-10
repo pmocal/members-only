@@ -4,9 +4,17 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const mongoose = require("mongoose");
+
 var indexRouter = require('./routes/index');
-var userRouter = require('./routes/user');
-var leagueRouter = require('./routes/league');
+
+const mongoDb = "mongodb+srv://" + process.env.DB_USER + ":" + 
+	process.env.DB_PASS + "@" + process.env.DB_HOST + "/members-only?retryWrites=true&w=majority";
+
+mongoose.connect(mongoDb, { useNewUrlParser: true });
+const db = mongoose.connection;
+
+db.on("error", console.error.bind(console, "mongo connection error"));
 
 var app = express();
 
@@ -21,8 +29,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/user', userRouter);
-app.use('/league', leagueRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
