@@ -14,7 +14,10 @@ exports.sign_up_post = (req, res, next) => {
 		bcrypt.hash(req.body.password, salt, function(err, hash){
 			const user = new User({
 				username: req.body.username,
-				password: hash
+				password: hash,
+				firstname: req.body.firstname,
+				lastname: req.body.lastname,
+				isMember: req.body.isMember
 			}).save(err => {
 				if (err) { 
 					return next(err);
