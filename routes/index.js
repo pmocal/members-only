@@ -59,6 +59,10 @@ router.get("/sign-up", user_controller.sign_up_get);
 
 router.post("/sign-up", user_controller.sign_up_post);
 
+router.get("/join", user_controller.join_get);
+
+router.post("/join", user_controller.join_post);
+
 router.post(
 	"/log-in",
 	passport.authenticate("local", {

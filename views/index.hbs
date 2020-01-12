@@ -6,8 +6,9 @@
 	</head>
 	<body>
 		{{#if user}}
-			<h1>Welcome back {{user}}</h1>
+			<h1>Welcome back {{user.firstname}} {{user.lastname}}</h1>
 			<a href="/log-out">Log Out</a>
+			<a href="/join">Join the club</a>
 		{{else}}
 			<h1>please log in</h1>
 			<form action="/log-in" method="POST">
@@ -16,6 +17,7 @@
 				<label for="password">Password</label>
 				<input name="password" type="password" />
 				<button>Log In</button>
+				<a href="/sign-up">Sign up</a>
 			</form>
 		{{/if}}
 	</body>

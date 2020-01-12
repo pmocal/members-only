@@ -64,6 +64,19 @@ exports.sign_up_post = [
 	}
 ];
 
+exports.join_get = (req, res) => {
+	res.render("join_form", { title: "Join the club", user: req.user });
+}
+
+exports.join_post = [
+	check('secret', 'secret must not be empty.').isLength({ min: 1 }).trim(),
+	sanitizeBody('secret').escape()//,
+	// (req, res, next) => {
+	// 	if (req.body.secret === "42") {
+
+	// 	}
+];
+
 exports.log_out = (req, res) => {
 	req.logout();
 	res.redirect("/");

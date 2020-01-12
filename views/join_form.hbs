@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{title}}</title>
+</head>
+<body>
+  <h1>Join</h1>
+  <form action="" method="POST">
+    <label for="secret">Enter the secret code and {{user.firstname}} {{user.lastname}} can join the exclusive club</label>
+    {{#if attempt}}
+      <input name="secret" placeholder="secret" type="text" value="{{attempt}}" />
+    {{else}}
+      <input name="secret" placeholder="secret" type="text" />
+    {{/if}}
+    <button>Apply</button>
+  </form>
+  {{#if errors}}
+    <ul>
+      {{#each errors}}
+        <li>{{this.msg}}</li>
+      {{/each}}
+    </ul>
+  {{/if}}
+</body>
+</html>
