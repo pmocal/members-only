@@ -70,11 +70,31 @@ exports.join_get = (req, res) => {
 
 exports.join_post = [
 	check('secret', 'secret must not be empty.').isLength({ min: 1 }).trim(),
-	sanitizeBody('secret').escape()//,
-	// (req, res, next) => {
-	// 	if (req.body.secret === "42") {
-
-	// 	}
+	sanitizeBody('secret').escape(),
+	(req, res, next) => {
+		const errors = validationResult(req);
+		var user = new User({
+			username: req.user.username,
+			password: req.user.password,
+			firstname: req.user.firstname,
+			lastname: req.user.lastname,
+			isMember: "true",
+			_id: req.user._id
+		});
+		if (!errors.isEmpty()) {
+			// There are errors. Render form again with sanitized values/error messages.
+			res.render('join_form', { title: "Join the club form", user: user, errors: errors.array() });
+			// , { title: 'Create Item', item: item, errors: errors.array() });
+		}
+		if (req.body.secret === "42") {
+			User.findByIdAndUpdate(req.user._id, user, {}, function (err, thecategory) {
+				if (err) { return next(err); }
+				res.render("index", { title: "welcome to the club" });
+			})
+		} else {
+			res.render('join_form', { title: "Your application was rejected, try again", user: user });
+		}
+	}
 ];
 
 exports.log_out = (req, res) => {
