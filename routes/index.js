@@ -49,8 +49,8 @@ router.use(passport.session());
 router.use(express.urlencoded({ extended: false }));
 
 router.use(function(req, res, next) {
-  res.locals.currentUser = req.user;
-  next();
+	res.locals.currentUser = req.user;
+	next();
 });
 
 router.get("/", user_controller.index);
